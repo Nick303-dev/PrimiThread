@@ -4,34 +4,55 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Scanner tastiera= new Scanner(System.in);
-        System.out.println("quante pecore dovrai contare per addormentarti?....");
-        int count= tastiera.nextInt(); //.nextLine() per leggere la riga
-        //singolo thread
-        ContaPecore thr1 = new ContaPecore(count);
-        thr1.start();
+        String nome_cavalli[] = new String[5];
 
-        //thread padre è sveglio
-        for (int i = 0; i < 100; i++) {
-            System.out.println((i + 1) + " sono sveglio ");
+        try (Scanner tastiera = new Scanner(System.in)) {
+            System.out.println("quanta distanza dovranno percorrere i cavalli");
+            int len= tastiera.nextInt(); //.nextLine() per leggere la riga
+            tastiera.nextLine();
+            for (int i = 0; i < 5 ; i++) {
+                System.out.println("inserisci nome cavallo"+ i);
+
+                nome_cavalli[i]=tastiera.nextLine();
+            }
+            //singolo thread
+            CorsaCavalli thr1 = new CorsaCavalli(len, nome_cavalli[0]);
+            CorsaCavalli thr2= new CorsaCavalli(len, nome_cavalli[1]);
+            CorsaCavalli thr3 = new CorsaCavalli(len, nome_cavalli[2]);
+            CorsaCavalli thr4 = new CorsaCavalli(len, nome_cavalli[3]);
+            CorsaCavalli thr5 = new CorsaCavalli(len, nome_cavalli[4]);
+            thr1.start();
+            thr2.start();
+            thr3.start();
+            thr4.start();
+            thr5.start();
+            
+            //thread padre è sveglio
+            for (int i = 0; i < 100; i++) {
+                System.out.println((i + 1) + " sono sveglio ");
+            }
         }
     }
 }
 
-class ContaPecore extends Thread {
+class CorsaCavalli extends Thread {
     //variabile privata
-    private final int num_pecore;
+    private final int metri;
+    private final String nomeCavallo;
     //costruttore
-    public ContaPecore(int num){
+    public CorsaCavalli(int len, String nome){
         super();
-        num_pecore=num;
+        this.metri=len;
+        this.nomeCavallo=nome;
+
     }
     @Override
     public void run() {
-        setName("thread conta pecorelle");
+        setName("thread corsa cavalli");
         System.out.println(Thread.currentThread().getName());
-        for (int i = 0; i < num_pecore; i++) {
-            System.out.println((i + 1) + " pecore ");
-        }
+        for (int i = metri; i >= 0; i-=5) {
+            System.out.println(nomeCavallo + " ha percorso " + (metri - i) + " metri");
+
+    }
     }
 }
