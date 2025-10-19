@@ -34,7 +34,7 @@ public class Main {
         }
     }
 }
-
+//
 class CorsaCavalli extends Thread {
     //variabile privata
     private final int metri;
