@@ -23,7 +23,7 @@ Il progetto ha lo scopo di:
 
 ---
 
-## 📥 Installazione e Avvio
+## Installazione e Avvio
 
 1. Clona o scarica il progetto:
 ``bash
